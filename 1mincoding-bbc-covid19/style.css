@@ -27,6 +27,7 @@ img {
   padding: 0 15px;
 }
 .scroll-graphic {
+  overflow-x: hidden;
   position: sticky;
   height: 100vh;
   top: 0;
@@ -42,12 +43,21 @@ img {
   height: 100%;
   opacity: 0;
   transition: 500ms;
+  will-change: opacity;
 }
 .graphic-item.visible {
   opacity: 1;
 }
 .scene-img {
   max-height: 100vh;
+}
+.bird {
+  position: absolute;
+  left: 0;
+  bottom: 70%;
+  width: 100px;
+  transition: 1.5s 0.5s linear;
+  transform: translate(-100%);
 }
 .scroll-text {
   position: relative;
@@ -58,4 +68,13 @@ img {
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.8);
   box-shadow: rgba(0, 0, 0, 0.3) 0 0 3px;
+}
+
+[data-index="5"] .bird {
+  left: 30%;
+  bottom: 30%;
+}
+.global-footer {
+  padding: 16px 0;
+  text-align: center;
 }

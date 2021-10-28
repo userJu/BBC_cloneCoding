@@ -1,6 +1,34 @@
 "use strict";
 
 (() => {
+  const actions = {
+    birdFlies(key) {
+      if (key) {
+        document.querySelector(
+          '[data-index="2"] .bird'
+        ).style.transform = `translateX(${window.innerWidth}px)`;
+      } else {
+        document.querySelector(
+          '[data-index="2"] .bird'
+        ).style.transform = `translateX(-100%)`;
+      }
+    },
+    birdFlies2(key) {
+      if (key) {
+        document.querySelector(
+          '[data-index="5"] .bird'
+        ).style.transform = `translate(${window.innerWidth}px, ${
+          -window.innerHeight * 0.7
+        }px)
+        `;
+      } else {
+        document.querySelector(
+          '[data-index="5"] .bird'
+        ).style.transform = `translateX(-100%)`;
+      }
+    },
+  };
+
   const stepElems = document.querySelectorAll(".step");
   const graphicElems = document.querySelectorAll(".graphic-item");
 
@@ -9,7 +37,6 @@
 
   const io = new IntersectionObserver((entries, observer) => {
     ioIndex = entries[0].target.dataset.index * 1;
-    console.log(ioIndex);
   });
 
   for (let i = 0; i < stepElems.length; i++) {
@@ -18,11 +45,17 @@
     graphicElems[i].dataset.index = i;
   }
 
-  function activate() {
+  function activate(action) {
     currentGraphic.classList.add("visible");
+    if (action) {
+      actions[action](true);
+    }
   }
-  function inActivate() {
+  function inActivate(action) {
     currentGraphic.classList.remove("visible");
+    if (action) {
+      actions[action](false);
+    }
   }
 
   window.addEventListener("scroll", () => {
@@ -42,12 +75,17 @@
         boundingRect.top > window.innerHeight * 0.1 &&
         boundingRect.top < window.innerHeight * 0.8
       ) {
-        inActivate();
+        inActivate(currentGraphic.dataset.action);
         currentGraphic = graphicElems[index];
-        activate();
+        activate(currentGraphic.dataset.action);
       }
     }
-    console.log(loop);
+  });
+
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      scrollTo(0, 0);
+    }, 100);
   });
   activate();
 })();
